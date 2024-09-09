@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: mack-postgres
+    environment:
+      POSTGRES_USER: mack
+      POSTGRES_PASSWORD: mack
+      POSTGRES_DB: mack
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres-db-volume-mack:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "mack"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+
+volumes:
+  postgres-db-volume-mack:
